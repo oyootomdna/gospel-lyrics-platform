@@ -8,7 +8,7 @@ vars = { ENVIRONMENT = "production" }
 [[env.production.d1_databases]]
 binding = "DB"
 database_name = "gospel-lyrics-db"
-database_id = "replace-with-actual-db-id"
+database_id = "7d29f542-135f-42cf-bc65-626b097b68ed"
 
 [vars]
 DOMAIN = "gospellyricsub.com"
