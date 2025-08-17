@@ -3,32 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gospel Lyrics Platform - Golden Edition</title>
+    <title>Gospel Lyrics Video Platform - Personal Voice Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-gold: #FFD700;
-            --dark-gold: #B8860B;
-            --light-gold: #FFF8DC;
-            --accent-gold: #DAA520;
-            --royal-purple: #4B0082;
-            --deep-purple: #2F0A4F;
-            --text-gold: #F5DEB3;
-            --shadow-gold: rgba(255, 215, 0, 0.3);
+            --primary-color: #2C5AA0;
+            --secondary-color: #1A3D73;
+            --accent-color: #4A90E2;
+            --text-primary: #FFFFFF;
+            --text-secondary: #E8F4FD;
+            --background-dark: #0B1426;
+            --background-light: #1A2B47;
+            --shadow-blue: rgba(74, 144, 226, 0.3);
+            --gradient-main: linear-gradient(135deg, #0B1426 0%, #1A2B47 50%, #2C5AA0 100%);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            font-family: 'Georgia', serif; 
-            background: linear-gradient(135deg, var(--royal-purple) 0%, var(--deep-purple) 50%, #1a0631 100%);
+            font-family: 'Inter', 'Segoe UI', sans-serif; 
+            background: var(--gradient-main);
             min-height: 100vh; 
-            color: var(--text-gold); 
+            color: var(--text-primary); 
             position: relative;
+            overflow-x: hidden;
         }
         
-        /* Animated golden particles background */
-        .golden-particles {
+        /* Modern animated background */
+        .background-animation {
             position: fixed;
             top: 0;
             left: 0;
@@ -36,21 +38,32 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
+            overflow: hidden;
         }
         
-        .particle {
+        .wave {
             position: absolute;
-            background: var(--primary-gold);
-            width: 3px;
-            height: 3px;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
             border-radius: 50%;
-            opacity: 0.7;
-            animation: float 6s ease-in-out infinite;
+            opacity: 0.1;
+            animation: wave 8s ease-in-out infinite;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
-            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        .wave:nth-child(2) {
+            animation-delay: -2s;
+            opacity: 0.08;
+        }
+        
+        .wave:nth-child(3) {
+            animation-delay: -4s;
+            opacity: 0.06;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: scale(0.8) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
         }
         
         /* Status Bar */
@@ -59,13 +72,14 @@
             top: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(90deg, var(--dark-gold), var(--primary-gold));
-            color: var(--deep-purple);
-            padding: 8px 20px;
-            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            color: var(--text-primary);
+            padding: 12px 20px;
+            font-weight: 600;
             font-size: 14px;
             z-index: 1000;
-            box-shadow: 0 2px 10px var(--shadow-gold);
+            box-shadow: 0 4px 20px var(--shadow-blue);
+            backdrop-filter: blur(10px);
         }
         
         .status-content {
@@ -110,7 +124,7 @@
         .header {
             text-align: center;
             margin-bottom: 40px;
-            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -125,29 +139,188 @@
         }
         
         @keyframes glow {
-            from { text-shadow: 0 0 20px var(--primary-gold); }
-            to { text-shadow: 0 0 30px var(--primary-gold), 0 0 40px var(--accent-gold); }
+            from { text-shadow: 0 0 20px var(--accent-color); }
+            to { text-shadow: 0 0 30px var(--accent-color), 0 0 40px var(--primary-color); }
         }
         
         .subtitle {
             font-size: 1.4em;
-            color: var(--light-gold);
+            color: var(--text-secondary);
             font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        /* Video Platform Section */
+        .video-section {
+            background: rgba(74, 144, 226, 0.1);
+            border: 2px solid var(--accent-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px var(--shadow-blue);
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .video-card {
+            background: var(--background-light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-color);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(74, 144, 226, 0.4);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: var(--background-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-placeholder {
+            color: var(--text-secondary);
+            font-size: 3em;
+            opacity: 0.5;
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(74, 144, 226, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .play-overlay:hover {
+            background: var(--accent-color);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-info {
+            padding: 20px;
+        }
+        
+        .video-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .video-artist {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 8px 15px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .action-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Upload Section */
+        .upload-section {
+            background: rgba(74, 144, 226, 0.05);
+            border: 2px dashed var(--accent-color);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-section:hover {
+            background: rgba(74, 144, 226, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .upload-icon {
+            font-size: 4em;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-blue);
         }
         
         /* Theme Selector */
         .theme-selector {
-            background: rgba(255, 215, 0, 0.1);
-            border: 2px solid var(--primary-gold);
+            background: rgba(74, 144, 226, 0.1);
+            border: 2px solid var(--accent-color);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 40px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 8px 32px var(--shadow-blue);
         }
         
         .theme-selector h3 {
-            color: var(--primary-gold);
+            color: var(--accent-color);
             margin-bottom: 20px;
             text-align: center;
             font-size: 1.5em;
@@ -186,9 +359,9 @@
             left: 100%;
         }
         
-        .golden-theme {
-            background: linear-gradient(45deg, var(--primary-gold), var(--dark-gold));
-            color: var(--deep-purple);
+        .blue-theme {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
         }
         
         .royal-theme {
@@ -208,8 +381,8 @@
         
         /* Voice Command Section */
         .voice-section {
-            background: rgba(255, 215, 0, 0.1);
-            border: 2px solid var(--accent-gold);
+            background: rgba(74, 144, 226, 0.1);
+            border: 2px solid var(--accent-color);
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 40px;
@@ -226,8 +399,8 @@
         }
         
         .voice-btn {
-            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
-            color: var(--deep-purple);
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            color: white;
             border: none;
             padding: 15px 30px;
             border-radius: 50px;
@@ -522,7 +695,7 @@
     <!-- Status Bar -->
     <div class="status-bar">
         <div class="status-content">
-            <div>🎵 Gospel Lyrics Platform - Golden Edition | Connected to oyoofrancistomy2@gmail.com</div>
+            <div>🎬 Gospel Video Platform - Personal Voice Edition | Connected to oyoofrancistomy2@gmail.com</div>
             <div class="voice-status">
                 <div class="voice-indicator" id="voiceIndicator"></div>
                 <span id="voiceStatus">Voice Ready</span>
@@ -530,22 +703,126 @@
         </div>
     </div>
 
-    <!-- Animated Golden Particles -->
-    <div class="golden-particles" id="particles"></div>
+    <!-- Modern Background Animation -->
+    <div class="background-animation" id="bgAnimation">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>🎵 Gospel Lyrics Platform</h1>
-            <p class="subtitle">Golden Edition - Premium Experience</p>
+            <h1>🎬 Gospel Lyrics Video Platform</h1>
+            <p class="subtitle">Personal Voice Edition - Your Gospel Video Collection</p>
         </div>
 
+        <!-- Video Upload Section -->
+        <div class="video-section">
+            <h3>🎬 Upload Your Gospel Lyrics Videos</h3>
+            <p>Upload your gospel lyrics videos and I'll automatically extract audio for playback</p>
+            
+            <div class="upload-section" ondrop="dropVideoHandler(event)" ondragover="dragOverHandler(event)">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h4>Drag & Drop Your Gospel Videos Here</h4>
+                <p>Or click to browse (MP4, AVI, MOV, WMV supported)</p>
+                <input type="file" id="videoFileInput" multiple accept="video/*" style="display: none;" onchange="handleVideoSelect(event)">
+                <button class="upload-btn" onclick="document.getElementById('videoFileInput').click()">
+                    <i class="fas fa-folder-open"></i> Browse Videos
+                </button>
+                <button class="upload-btn" onclick="recordVideo()">
+                    <i class="fas fa-video"></i> Record New Video
+                </button>
+            </div>
+        </div>
+        
+        <!-- Video Library -->
+        <div class="video-section">
+            <h3>📺 Your Gospel Video Library</h3>
+            <div class="video-grid" id="videoLibrary">
+                <!-- Sample videos will be loaded here -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="video-placeholder">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <button class="play-overlay" onclick="playVideo('sample1')">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">Amazing Grace</div>
+                        <div class="video-artist">Traditional Gospel</div>
+                        <div class="video-actions">
+                            <button class="action-btn" onclick="playVideo('sample1')">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                            <button class="action-btn" onclick="extractAudio('sample1')">
+                                <i class="fas fa-volume-up"></i> Audio
+                            </button>
+                            <button class="action-btn" onclick="editVideo('sample1')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="video-placeholder">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <button class="play-overlay" onclick="playVideo('sample2')">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">How Great Thou Art</div>
+                        <div class="video-artist">Traditional Hymn</div>
+                        <div class="video-actions">
+                            <button class="action-btn" onclick="playVideo('sample2')">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                            <button class="action-btn" onclick="extractAudio('sample2')">
+                                <i class="fas fa-volume-up"></i> Audio
+                            </button>
+                            <button class="action-btn" onclick="editVideo('sample2')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="video-placeholder">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <button class="play-overlay" onclick="document.getElementById('videoFileInput').click()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">Upload New Video</div>
+                        <div class="video-artist">Add your gospel videos</div>
+                        <div class="video-actions">
+                            <button class="action-btn" onclick="document.getElementById('videoFileInput').click()">
+                                <i class="fas fa-upload"></i> Upload
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Theme Selector -->
         <div class="theme-selector">
-            <h3>✨ Choose Your Premium Theme</h3>
+            <h3>🎨 Choose Your Platform Theme</h3>
             <div class="theme-buttons">
-                <button class="theme-btn golden-theme" onclick="applyTheme('golden')">
-                    🥇 Golden Royalty (Current)
+                <button class="theme-btn blue-theme" onclick="applyTheme('blue')">
+                    🔵 Ocean Blue (Current)
                 </button>
                 <button class="theme-btn royal-theme" onclick="applyTheme('royal')">
                     👑 Royal Purple
@@ -559,10 +836,10 @@
             </div>
         </div>
 
-        <!-- Voice Command Section -->
+        <!-- Personal Voice System -->
         <div class="voice-section">
-            <h3>🎤 Voice Commands & Custom Voice Setup</h3>
-            <p>Control the platform with your voice AND use your real voice for feedback!</p>
+            <h3>🎤 Personal Voice Feedback System</h3>
+            <p>Record your own voice for all platform responses - Make it truly personal!</p>
             
             <div class="voice-controls">
                 <button class="voice-btn" onclick="startVoiceRecognition()">
@@ -579,9 +856,9 @@
                 </button>
             </div>
             
-            <!-- Custom Voice Upload Section -->
-            <div class="custom-voice-section" style="margin-top: 20px; padding: 20px; background: rgba(255,215,0,0.15); border: 2px solid var(--accent-gold); border-radius: 15px;">
-                <h4 style="color: var(--primary-gold); margin-bottom: 15px;">🎵 Upload Your Real Voice for Feedback</h4>
+            <!-- Personal Voice Recording Section -->
+            <div class="custom-voice-section" style="margin-top: 20px; padding: 20px; background: rgba(74,144,226,0.15); border: 2px solid var(--accent-color); border-radius: 15px;">
+                <h4 style="color: var(--accent-color); margin-bottom: 15px;">🎤 Record Your Personal Voice Messages</h4>
                 
                 <div class="voice-upload-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
                     <button class="voice-tab-btn active" onclick="showVoiceTab('record')" id="recordTab">
@@ -605,7 +882,7 @@
                     <div class="recording-interface" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
                         <div class="record-item">
                             <h5>Welcome Message</h5>
-                            <p style="font-style: italic; color: var(--text-gold); margin: 5px 0;">"Welcome to Gospel Lyrics Platform"</p>
+                            <p style="font-style: italic; color: var(--text-secondary); margin: 5px 0;">"Welcome to Gospel Video Platform"</p>
                             <div class="record-controls">
                                 <button onclick="startRecording('welcome')" class="record-btn">
                                     <i class="fas fa-circle" style="color: red;"></i> Record
@@ -934,6 +1211,11 @@
     </div>
 
     <script>
+        // Video Platform Variables
+        let uploadedVideos = [];
+        let extractedAudios = [];
+        let currentVideoPlayer = null;
+        
         // Enhanced Voice Recognition Setup
         let recognition;
         let isListening = false;
@@ -956,6 +1238,211 @@
             preferredLanguage: 'en-US',
             useCustomVoice: true
         };
+        
+        // Video Platform Functions
+        function dragOverHandler(event) {
+            event.preventDefault();
+            event.currentTarget.style.background = 'rgba(74, 144, 226, 0.2)';
+        }
+        
+        function dropVideoHandler(event) {
+            event.preventDefault();
+            event.currentTarget.style.background = '';
+            
+            const files = event.dataTransfer.files;
+            handleVideoFiles(files);
+        }
+        
+        function handleVideoSelect(event) {
+            const files = event.target.files;
+            handleVideoFiles(files);
+        }
+        
+        function handleVideoFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('video/')) {
+                    processVideoFile(file);
+                } else {
+                    speak('Please upload video files only (MP4, AVI, MOV, WMV).', 'error');
+                }
+            });
+        }
+        
+        function processVideoFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const videoUrl = e.target.result;
+                const videoData = {
+                    id: 'video_' + Date.now(),
+                    name: file.name.replace(/\.[^/.]+$/, ''), // Remove extension
+                    file: file,
+                    url: videoUrl,
+                    uploadDate: new Date().toISOString()
+                };
+                
+                uploadedVideos.push(videoData);
+                addVideoToLibrary(videoData);
+                
+                // Automatically extract audio
+                extractAudioFromVideo(videoData);
+                
+                speak(`Video ${videoData.name} uploaded successfully! Audio extraction started.`, 'confirm');
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function addVideoToLibrary(videoData) {
+            const videoLibrary = document.getElementById('videoLibrary');
+            
+            // Remove the 'Upload New Video' card temporarily
+            const uploadCard = videoLibrary.querySelector('.video-card:last-child');
+            if (uploadCard) uploadCard.remove();
+            
+            const videoCard = document.createElement('div');
+            videoCard.className = 'video-card';
+            videoCard.innerHTML = `
+                <div class="video-thumbnail">
+                    <video preload="metadata" onloadedmetadata="setThumbnail(this)">
+                        <source src="${videoData.url}" type="${videoData.file.type}">
+                    </video>
+                    <button class="play-overlay" onclick="playVideo('${videoData.id}')">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">${videoData.name}</div>
+                    <div class="video-artist">Personal Gospel Collection</div>
+                    <div class="video-actions">
+                        <button class="action-btn" onclick="playVideo('${videoData.id}')">
+                            <i class="fas fa-play"></i> Play
+                        </button>
+                        <button class="action-btn" onclick="extractAudio('${videoData.id}')">
+                            <i class="fas fa-volume-up"></i> Audio
+                        </button>
+                        <button class="action-btn" onclick="deleteVideo('${videoData.id}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            videoLibrary.appendChild(videoCard);
+            
+            // Re-add the upload card
+            const newUploadCard = document.createElement('div');
+            newUploadCard.className = 'video-card';
+            newUploadCard.innerHTML = `
+                <div class="video-thumbnail">
+                    <div class="video-placeholder">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <button class="play-overlay" onclick="document.getElementById('videoFileInput').click()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">Upload New Video</div>
+                    <div class="video-artist">Add your gospel videos</div>
+                    <div class="video-actions">
+                        <button class="action-btn" onclick="document.getElementById('videoFileInput').click()">
+                            <i class="fas fa-upload"></i> Upload
+                        </button>
+                    </div>
+                </div>
+            `;
+            videoLibrary.appendChild(newUploadCard);
+        }
+        
+        function playVideo(videoId) {
+            const video = uploadedVideos.find(v => v.id === videoId);
+            if (video) {
+                // Create full-screen video player
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.9);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                `;
+                
+                modal.innerHTML = `
+                    <div style="position: relative; max-width: 90%; max-height: 90%;">
+                        <video controls autoplay style="width: 100%; height: 100%;">
+                            <source src="${video.url}" type="${video.file.type}">
+                        </video>
+                        <button onclick="this.parentElement.parentElement.remove()" 
+                                style="position: absolute; top: 10px; right: 10px; 
+                                       background: rgba(255,255,255,0.8); border: none; 
+                                       border-radius: 50%; width: 40px; height: 40px; 
+                                       font-size: 20px; cursor: pointer;">
+                            ×
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                speak(`Playing ${video.name}`, 'confirm');
+            } else {
+                speak('Sample video playback - Upload your own videos to play them here!', 'confirm');
+            }
+        }
+        
+        function extractAudioFromVideo(videoData) {
+            // Simulate audio extraction (in a real app, this would be done server-side)
+            setTimeout(() => {
+                const audioData = {
+                    id: 'audio_' + videoData.id,
+                    videoId: videoData.id,
+                    name: videoData.name + ' (Audio)',
+                    extractedAt: new Date().toISOString()
+                };
+                
+                extractedAudios.push(audioData);
+                speak(`Audio extracted from ${videoData.name}`, 'confirm');
+            }, 2000);
+        }
+        
+        function extractAudio(videoId) {
+            const video = uploadedVideos.find(v => v.id === videoId);
+            if (video) {
+                extractAudioFromVideo(video);
+            } else {
+                speak('Audio extraction feature - Upload your videos to extract audio automatically!', 'confirm');
+            }
+        }
+        
+        function deleteVideo(videoId) {
+            if (confirm('Are you sure you want to delete this video?')) {
+                uploadedVideos = uploadedVideos.filter(v => v.id !== videoId);
+                extractedAudios = extractedAudios.filter(a => a.videoId !== videoId);
+                
+                // Remove from UI
+                const videoCards = document.querySelectorAll('.video-card');
+                videoCards.forEach(card => {
+                    const playBtn = card.querySelector('.play-overlay');
+                    if (playBtn && playBtn.getAttribute('onclick').includes(videoId)) {
+                        card.remove();
+                    }
+                });
+                
+                speak('Video deleted successfully', 'confirm');
+            }
+        }
+        
+        function recordVideo() {
+            speak('Video recording feature coming soon! You can upload pre-recorded videos for now.', 'confirm');
+        }
+        
+        function setThumbnail(videoElement) {
+            // Set video to first frame for thumbnail
+            videoElement.currentTime = 1;
+        }
 
         // Initialize Enhanced Voice Recognition
         function initializeVoiceRecognition() {
@@ -1078,7 +1565,7 @@
             // Process commands with enhanced natural language understanding
             if (patterns.greeting.test(command)) {
                 const greetings = [
-                    'Hello! Welcome to Gospel Lyrics Platform. How can I help you today?',
+                    'Hello! Welcome to Gospel Video Platform. How can I help you with your videos today?',
                     'Hi there! Your voice sounds great. What would you like to do?',
                     'Good to hear your voice! Ready to help with gospel lyrics.',
                     'Hello! Voice recognition is active. What can I do for you?'
@@ -1243,7 +1730,7 @@
                     customVoiceSamples[type] = audioUrl;
                     
                     // Update UI
-                    document.getElementById(type + 'Status').textContent = 'Recorded! ✅';\n                    document.getElementById(type + 'Status').style.color = 'var(--primary-gold)';\n                    \n                    // Save to localStorage\n                    saveVoiceProfile();\n                    \n                    speak(`${type} voice sample recorded successfully!`, 'confirm');\n                };\n                \n                mediaRecorder.start();\n                \n                // Update UI\n                document.getElementById(type + 'Status').textContent = 'Recording... 🔴';\n                document.getElementById(type + 'Status').style.color = 'red';\n                \n                // Auto-stop after 10 seconds\n                setTimeout(() => {\n                    if (mediaRecorder && mediaRecorder.state === 'recording') {\n                        stopRecording();\n                    }\n                }, 10000);\n                \n            } catch (error) {\n                console.error('Recording failed:', error);\n                speak('Recording failed. Please check microphone permissions.');\n                document.getElementById(type + 'Status').textContent = 'Recording failed ❌';\n            }\n        }\n        \n        function stopRecording() {\n            if (mediaRecorder && mediaRecorder.state === 'recording') {\n                mediaRecorder.stop();\n                mediaRecorder.stream.getTracks().forEach(track => track.stop());\n            }\n        }\n        \n        function playRecording(type) {\n            if (customVoiceSamples[type]) {\n                playCustomVoice(type);\n            } else {\n                speak(`No ${type} voice sample recorded yet. Please record one first.`);\n            }\n        }\n        \n        // Voice Tab Management\n        function showVoiceTab(tabName) {\n            // Hide all tabs\n            document.querySelectorAll('.voice-tab-content').forEach(tab => {\n                tab.style.display = 'none';\n            });\n            \n            // Remove active class from all buttons\n            document.querySelectorAll('.voice-tab-btn').forEach(btn => {\n                btn.classList.remove('active');\n            });\n            \n            // Show selected tab\n            document.getElementById(tabName + 'Content').style.display = 'block';\n            document.getElementById(tabName + 'Tab').classList.add('active');\n            \n            // Update content based on tab\n            if (tabName === 'manage') {\n                updateVoiceLibrary();\n            }\n        }\n        \n        // File Upload Handlers\n        function dragOverHandler(event) {\n            event.preventDefault();\n            event.currentTarget.style.background = 'rgba(255, 215, 0, 0.1)';\n        }\n        \n        function dropHandler(event) {\n            event.preventDefault();\n            event.currentTarget.style.background = '';\n            \n            const files = event.dataTransfer.files;\n            handleFiles(files);\n        }\n        \n        function handleFileSelect(event) {\n            const files = event.target.files;\n            handleFiles(files);\n        }\n        \n        function handleFiles(files) {\n            Array.from(files).forEach(file => {\n                if (file.type.startsWith('audio/')) {\n                    const reader = new FileReader();\n                    reader.onload = (e) => {\n                        // Create audio URL\n                        const audioUrl = e.target.result;\n                        \n                        // Add to assignment grid\n                        addToAssignmentGrid(file.name, audioUrl);\n                    };\n                    reader.readAsDataURL(file);\n                } else {\n                    speak('Please upload audio files only.');\n                }\n            });\n        }\n        \n        function addToAssignmentGrid(fileName, audioUrl) {\n            const grid = document.getElementById('assignmentGrid');\n            const item = document.createElement('div');\n            item.className = 'voice-library-item';\n            item.innerHTML = `\n                <div>\n                    <strong>${fileName}</strong>\n                    <div style=\"font-size: 12px; color: var(--text-gold);\">\n                        Assign to: \n                        <select onchange=\"assignVoiceFile('${audioUrl}', this.value)\" style=\"margin-left: 5px; background: var(--deep-purple); color: var(--text-gold); border: 1px solid var(--accent-gold); border-radius: 3px;\">\n                            <option value=\"\">Select response...</option>\n                            <option value=\"welcome\">Welcome Message</option>\n                            <option value=\"confirm\">Command Confirmation</option>\n                            <option value=\"search\">Search Response</option>\n                            <option value=\"theme\">Theme Change</option>\n                            <option value=\"error\">Error Message</option>\n                            <option value=\"greeting\">Greeting Response</option>\n                        </select>\n                    </div>\n                </div>\n                <div>\n                    <button onclick=\"playAudioUrl('${audioUrl}')\" class=\"play-btn\">\n                        <i class=\"fas fa-play\"></i>\n                    </button>\n                </div>\n            `;\n            grid.appendChild(item);\n        }\n        \n        function assignVoiceFile(audioUrl, responseType) {\n            if (responseType) {\n                customVoiceSamples[responseType] = audioUrl;\n                saveVoiceProfile();\n                speak(`Voice assigned to ${responseType} responses!`, 'confirm');\n            }\n        }\n        \n        function playAudioUrl(audioUrl) {\n            const audio = new Audio(audioUrl);\n            audio.volume = document.getElementById('voiceVolume')?.value || 1;\n            audio.play();\n        }\n        \n        // Voice Profile Management\n        function saveVoiceProfile() {\n            const profile = {\n                samples: customVoiceSamples,\n                settings: userVoiceProfile\n            };\n            localStorage.setItem('gospelVoiceProfile', JSON.stringify(profile));\n        }\n        \n        function loadVoiceProfile() {\n            const saved = localStorage.getItem('gospelVoiceProfile');\n            if (saved) {\n                const profile = JSON.parse(saved);\n                customVoiceSamples = { ...customVoiceSamples, ...profile.samples };\n                userVoiceProfile = { ...userVoiceProfile, ...profile.settings };\n                \n                // Update UI\n                if (document.getElementById('useCustomVoice')) {\n                    document.getElementById('useCustomVoice').checked = userVoiceProfile.useCustomVoice;\n                }\n            }\n        }\n        \n        function updateVoiceLibrary() {\n            const library = document.getElementById('voiceLibrary');\n            library.innerHTML = '';\n            \n            Object.entries(customVoiceSamples).forEach(([type, audioUrl]) => {\n                if (audioUrl) {\n                    const item = document.createElement('div');\n                    item.className = 'voice-library-item';\n                    item.innerHTML = `\n                        <div>\n                            <strong>${type.charAt(0).toUpperCase() + type.slice(1)} Voice</strong>\n                            <div style=\"font-size: 12px; color: var(--text-gold);\">Ready for use ✅</div>\n                        </div>\n                        <div>\n                            <button onclick=\"playCustomVoice('${type}')\" class=\"play-btn\">\n                                <i class=\"fas fa-play\"></i>\n                            </button>\n                            <button onclick=\"removeVoiceSample('${type}')\" class=\"record-btn\" style=\"background: linear-gradient(45deg, #ff4444, #cc0000); margin-left: 5px;\">\n                                <i class=\"fas fa-trash\"></i>\n                            </button>\n                        </div>\n                    `;\n                    library.appendChild(item);\n                }\n            });\n            \n            if (library.children.length === 0) {\n                library.innerHTML = '<p style=\"text-align: center; color: var(--text-gold);\">No voice samples recorded yet. Use the Record or Upload tabs to add your voice!</p>';\n            }\n        }\n        \n        function removeVoiceSample(type) {\n            if (confirm(`Remove ${type} voice sample?`)) {\n                customVoiceSamples[type] = null;\n                saveVoiceProfile();\n                updateVoiceLibrary();\n                speak('Voice sample removed.');\n            }\n        }\n        \n        function testVoiceResponse(type) {\n            const messages = {\n                welcome: 'Welcome to Gospel Lyrics Platform Golden Edition!',\n                confirm: 'Command received and understood.',\n                search: 'Searching for your requested gospel lyrics.',\n                theme: 'Theme has been changed successfully.',\n                error: 'I did not understand that command. Please try again.',\n                greeting: 'Hello! How can I help you with gospel lyrics today?'\n            };\n            \n            speak(messages[type], type);\n        }\n        \n        function testAllVoices() {\n            const types = Object.keys(customVoiceSamples);\n            let index = 0;\n            \n            function playNext() {\n                if (index < types.length) {\n                    const type = types[index];\n                    if (customVoiceSamples[type]) {\n                        speak(`Testing ${type}`, 'confirm');\n                        setTimeout(() => {\n                            testVoiceResponse(type);\n                            index++;\n                            setTimeout(playNext, 2000);\n                        }, 1000);\n                    } else {\n                        index++;\n                        playNext();\n                    }\n                }\n            }\n            \n            playNext();\n        }\n        \n        function toggleCustomVoice() {\n            userVoiceProfile.useCustomVoice = document.getElementById('useCustomVoice').checked;\n            saveVoiceProfile();\n            \n            const status = userVoiceProfile.useCustomVoice ? 'enabled' : 'disabled';\n            speak(`Custom voice feedback ${status}.`, 'confirm');\n        }\n        \n        function exportVoiceProfile() {\n            const profile = {\n                samples: customVoiceSamples,\n                settings: userVoiceProfile,\n                exportDate: new Date().toISOString()\n            };\n            \n            const blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' });\n            const url = URL.createObjectURL(blob);\n            \n            const a = document.createElement('a');\n            a.href = url;\n            a.download = 'gospel-platform-voice-profile.json';\n            a.click();\n            \n            URL.revokeObjectURL(url);\n            speak('Voice profile exported successfully!', 'confirm');\n        }\n        \n        function importVoiceProfile() {\n            const input = document.createElement('input');\n            input.type = 'file';\n            input.accept = '.json';\n            \n            input.onchange = (e) => {\n                const file = e.target.files[0];\n                if (file) {\n                    const reader = new FileReader();\n                    reader.onload = (event) => {\n                        try {\n                            const profile = JSON.parse(event.target.result);\n                            customVoiceSamples = { ...customVoiceSamples, ...profile.samples };\n                            userVoiceProfile = { ...userVoiceProfile, ...profile.settings };\n                            saveVoiceProfile();\n                            updateVoiceLibrary();\n                            speak('Voice profile imported successfully!', 'confirm');\n                        } catch (error) {\n                            speak('Failed to import voice profile. Invalid file format.');\n                        }\n                    };\n                    reader.readAsText(file);\n                }\n            };\n            \n            input.click();\n        }\n        \n        function clearAllVoices() {\n            if (confirm('This will delete all your recorded voice samples. Are you sure?')) {\n                Object.keys(customVoiceSamples).forEach(key => {\n                    customVoiceSamples[key] = null;\n                });\n                saveVoiceProfile();\n                updateVoiceLibrary();\n                speak('All voice samples cleared.');\n            }\n        }
+                    document.getElementById(type + 'Status').textContent = 'Recorded! ✅';\n                    document.getElementById(type + 'Status').style.color = 'var(--primary-gold)';\n                    \n                    // Save to localStorage\n                    saveVoiceProfile();\n                    \n                    speak(`${type} voice sample recorded successfully!`, 'confirm');\n                };\n                \n                mediaRecorder.start();\n                \n                // Update UI\n                document.getElementById(type + 'Status').textContent = 'Recording... 🔴';\n                document.getElementById(type + 'Status').style.color = 'red';\n                \n                // Auto-stop after 10 seconds\n                setTimeout(() => {\n                    if (mediaRecorder && mediaRecorder.state === 'recording') {\n                        stopRecording();\n                    }\n                }, 10000);\n                \n            } catch (error) {\n                console.error('Recording failed:', error);\n                speak('Recording failed. Please check microphone permissions.');\n                document.getElementById(type + 'Status').textContent = 'Recording failed ❌';\n            }\n        }\n        \n        function stopRecording() {\n            if (mediaRecorder && mediaRecorder.state === 'recording') {\n                mediaRecorder.stop();\n                mediaRecorder.stream.getTracks().forEach(track => track.stop());\n            }\n        }\n        \n        function playRecording(type) {\n            if (customVoiceSamples[type]) {\n                playCustomVoice(type);\n            } else {\n                speak(`No ${type} voice sample recorded yet. Please record one first.`);\n            }\n        }\n        \n        // Voice Tab Management\n        function showVoiceTab(tabName) {\n            // Hide all tabs\n            document.querySelectorAll('.voice-tab-content').forEach(tab => {\n                tab.style.display = 'none';\n            });\n            \n            // Remove active class from all buttons\n            document.querySelectorAll('.voice-tab-btn').forEach(btn => {\n                btn.classList.remove('active');\n            });\n            \n            // Show selected tab\n            document.getElementById(tabName + 'Content').style.display = 'block';\n            document.getElementById(tabName + 'Tab').classList.add('active');\n            \n            // Update content based on tab\n            if (tabName === 'manage') {\n                updateVoiceLibrary();\n            }\n        }\n        \n        // File Upload Handlers\n        function dragOverHandler(event) {\n            event.preventDefault();\n            event.currentTarget.style.background = 'rgba(255, 215, 0, 0.1)';\n        }\n        \n        function dropHandler(event) {\n            event.preventDefault();\n            event.currentTarget.style.background = '';\n            \n            const files = event.dataTransfer.files;\n            handleFiles(files);\n        }\n        \n        function handleFileSelect(event) {\n            const files = event.target.files;\n            handleFiles(files);\n        }\n        \n        function handleFiles(files) {\n            Array.from(files).forEach(file => {\n                if (file.type.startsWith('audio/')) {\n                    const reader = new FileReader();\n                    reader.onload = (e) => {\n                        // Create audio URL\n                        const audioUrl = e.target.result;\n                        \n                        // Add to assignment grid\n                        addToAssignmentGrid(file.name, audioUrl);\n                    };\n                    reader.readAsDataURL(file);\n                } else {\n                    speak('Please upload audio files only.');\n                }\n            });\n        }\n        \n        function addToAssignmentGrid(fileName, audioUrl) {\n            const grid = document.getElementById('assignmentGrid');\n            const item = document.createElement('div');\n            item.className = 'voice-library-item';\n            item.innerHTML = `\n                <div>\n                    <strong>${fileName}</strong>\n                    <div style=\"font-size: 12px; color: var(--text-gold);\">\n                        Assign to: \n                        <select onchange=\"assignVoiceFile('${audioUrl}', this.value)\" style=\"margin-left: 5px; background: var(--deep-purple); color: var(--text-gold); border: 1px solid var(--accent-gold); border-radius: 3px;\">\n                            <option value=\"\">Select response...</option>\n                            <option value=\"welcome\">Welcome Message</option>\n                            <option value=\"confirm\">Command Confirmation</option>\n                            <option value=\"search\">Search Response</option>\n                            <option value=\"theme\">Theme Change</option>\n                            <option value=\"error\">Error Message</option>\n                            <option value=\"greeting\">Greeting Response</option>\n                        </select>\n                    </div>\n                </div>\n                <div>\n                    <button onclick=\"playAudioUrl('${audioUrl}')\" class=\"play-btn\">\n                        <i class=\"fas fa-play\"></i>\n                    </button>\n                </div>\n            `;\n            grid.appendChild(item);\n        }\n        \n        function assignVoiceFile(audioUrl, responseType) {\n            if (responseType) {\n                customVoiceSamples[responseType] = audioUrl;\n                saveVoiceProfile();\n                speak(`Voice assigned to ${responseType} responses!`, 'confirm');\n            }\n        }\n        \n        function playAudioUrl(audioUrl) {\n            const audio = new Audio(audioUrl);\n            audio.volume = document.getElementById('voiceVolume')?.value || 1;\n            audio.play();\n        }\n        \n        // Voice Profile Management\n        function saveVoiceProfile() {\n            const profile = {\n                samples: customVoiceSamples,\n                settings: userVoiceProfile\n            };\n            localStorage.setItem('gospelVoiceProfile', JSON.stringify(profile));\n        }\n        \n        function loadVoiceProfile() {\n            const saved = localStorage.getItem('gospelVoiceProfile');\n            if (saved) {\n                const profile = JSON.parse(saved);\n                customVoiceSamples = { ...customVoiceSamples, ...profile.samples };\n                userVoiceProfile = { ...userVoiceProfile, ...profile.settings };\n                \n                // Update UI\n                if (document.getElementById('useCustomVoice')) {\n                    document.getElementById('useCustomVoice').checked = userVoiceProfile.useCustomVoice;\n                }\n            }\n        }\n        \n        function updateVoiceLibrary() {\n            const library = document.getElementById('voiceLibrary');\n            library.innerHTML = '';\n            \n            Object.entries(customVoiceSamples).forEach(([type, audioUrl]) => {\n                if (audioUrl) {\n                    const item = document.createElement('div');\n                    item.className = 'voice-library-item';\n                    item.innerHTML = `\n                        <div>\n                            <strong>${type.charAt(0).toUpperCase() + type.slice(1)} Voice</strong>\n                            <div style=\"font-size: 12px; color: var(--text-gold);\">Ready for use ✅</div>\n                        </div>\n                        <div>\n                            <button onclick=\"playCustomVoice('${type}')\" class=\"play-btn\">\n                                <i class=\"fas fa-play\"></i>\n                            </button>\n                            <button onclick=\"removeVoiceSample('${type}')\" class=\"record-btn\" style=\"background: linear-gradient(45deg, #ff4444, #cc0000); margin-left: 5px;\">\n                                <i class=\"fas fa-trash\"></i>\n                            </button>\n                        </div>\n                    `;\n                    library.appendChild(item);\n                }\n            });\n            \n            if (library.children.length === 0) {\n                library.innerHTML = '<p style=\"text-align: center; color: var(--text-gold);\">No voice samples recorded yet. Use the Record or Upload tabs to add your voice!</p>';\n            }\n        }\n        \n        function removeVoiceSample(type) {\n            if (confirm(`Remove ${type} voice sample?`)) {\n                customVoiceSamples[type] = null;\n                saveVoiceProfile();\n                updateVoiceLibrary();\n                speak('Voice sample removed.');\n            }\n        }\n        \n        function testVoiceResponse(type) {\n            const messages = {\n                welcome: 'Welcome to Gospel Video Platform Personal Voice Edition!',\n                confirm: 'Command received and understood.',\n                search: 'Searching for your requested gospel videos.',\n                theme: 'Theme has been changed successfully.',\n                error: 'I did not understand that command. Please try again.',\n                greeting: 'Hello! How can I help you with gospel videos today?'\n            };\n            \n            speak(messages[type], type);\n        }\n        \n        function testAllVoices() {\n            const types = Object.keys(customVoiceSamples);\n            let index = 0;\n            \n            function playNext() {\n                if (index < types.length) {\n                    const type = types[index];\n                    if (customVoiceSamples[type]) {\n                        speak(`Testing ${type}`, 'confirm');\n                        setTimeout(() => {\n                            testVoiceResponse(type);\n                            index++;\n                            setTimeout(playNext, 2000);\n                        }, 1000);\n                    } else {\n                        index++;\n                        playNext();\n                    }\n                }\n            }\n            \n            playNext();\n        }\n        \n        function toggleCustomVoice() {\n            userVoiceProfile.useCustomVoice = document.getElementById('useCustomVoice').checked;\n            saveVoiceProfile();\n            \n            const status = userVoiceProfile.useCustomVoice ? 'enabled' : 'disabled';\n            speak(`Custom voice feedback ${status}.`, 'confirm');\n        }\n        \n        function exportVoiceProfile() {\n            const profile = {\n                samples: customVoiceSamples,\n                settings: userVoiceProfile,\n                exportDate: new Date().toISOString()\n            };\n            \n            const blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' });\n            const url = URL.createObjectURL(blob);\n            \n            const a = document.createElement('a');\n            a.href = url;\n            a.download = 'gospel-platform-voice-profile.json';\n            a.click();\n            \n            URL.revokeObjectURL(url);\n            speak('Voice profile exported successfully!', 'confirm');\n        }\n        \n        function importVoiceProfile() {\n            const input = document.createElement('input');\n            input.type = 'file';\n            input.accept = '.json';\n            \n            input.onchange = (e) => {\n                const file = e.target.files[0];\n                if (file) {\n                    const reader = new FileReader();\n                    reader.onload = (event) => {\n                        try {\n                            const profile = JSON.parse(event.target.result);\n                            customVoiceSamples = { ...customVoiceSamples, ...profile.samples };\n                            userVoiceProfile = { ...userVoiceProfile, ...profile.settings };\n                            saveVoiceProfile();\n                            updateVoiceLibrary();\n                            speak('Voice profile imported successfully!', 'confirm');\n                        } catch (error) {\n                            speak('Failed to import voice profile. Invalid file format.');\n                        }\n                    };\n                    reader.readAsText(file);\n                }\n            };\n            \n            input.click();\n        }\n        \n        function clearAllVoices() {\n            if (confirm('This will delete all your recorded voice samples. Are you sure?')) {\n                Object.keys(customVoiceSamples).forEach(key => {\n                    customVoiceSamples[key] = null;\n                });\n                saveVoiceProfile();\n                updateVoiceLibrary();\n                speak('All voice samples cleared.');\n            }\n        }
 
         function showVoiceHelp() {
             const helpDiv = document.getElementById('voiceHelp');
@@ -1260,25 +1747,33 @@
             const root = document.documentElement;
             
             switch(themeName) {
-                case 'golden':
-                    root.style.setProperty('--primary-gold', '#FFD700');
-                    root.style.setProperty('--dark-gold', '#B8860B');
-                    root.style.setProperty('--royal-purple', '#4B0082');
+                case 'blue':
+                    root.style.setProperty('--primary-color', '#2C5AA0');
+                    root.style.setProperty('--secondary-color', '#1A3D73');
+                    root.style.setProperty('--accent-color', '#4A90E2');
+                    root.style.setProperty('--background-dark', '#0B1426');
+                    root.style.setProperty('--background-light', '#1A2B47');
                     break;
                 case 'royal':
-                    root.style.setProperty('--primary-gold', '#9370DB');
-                    root.style.setProperty('--dark-gold', '#663399');
-                    root.style.setProperty('--royal-purple', '#191970');
+                    root.style.setProperty('--primary-color', '#663399');
+                    root.style.setProperty('--secondary-color', '#4B0082');
+                    root.style.setProperty('--accent-color', '#9370DB');
+                    root.style.setProperty('--background-dark', '#1a0631');
+                    root.style.setProperty('--background-light', '#2F0A4F');
                     break;
                 case 'emerald':
-                    root.style.setProperty('--primary-gold', '#50C878');
-                    root.style.setProperty('--dark-gold', '#228B22');
-                    root.style.setProperty('--royal-purple', '#006400');
+                    root.style.setProperty('--primary-color', '#228B22');
+                    root.style.setProperty('--secondary-color', '#006400');
+                    root.style.setProperty('--accent-color', '#50C878');
+                    root.style.setProperty('--background-dark', '#0a2b0a');
+                    root.style.setProperty('--background-light', '#1a4a1a');
                     break;
                 case 'ruby':
-                    root.style.setProperty('--primary-gold', '#E0115F');
-                    root.style.setProperty('--dark-gold', '#8B0000');
-                    root.style.setProperty('--royal-purple', '#4B0000');
+                    root.style.setProperty('--primary-color', '#8B0000');
+                    root.style.setProperty('--secondary-color', '#4B0000');
+                    root.style.setProperty('--accent-color', '#E0115F');
+                    root.style.setProperty('--background-dark', '#2b0a0a');
+                    root.style.setProperty('--background-light', '#4a1a1a');
                     break;
             }
             
@@ -1292,7 +1787,7 @@
             const statusContent = document.querySelector('.status-content div:first-child');
             statusContent.textContent = message;
             setTimeout(() => {
-                statusContent.textContent = '🎵 Gospel Lyrics Platform - Golden Edition | Connected to oyoofrancistomy2@gmail.com';
+                statusContent.textContent = '🎬 Gospel Video Platform - Personal Voice Edition | Connected to oyoofrancistomy2@gmail.com';
             }, 3000);
         }
 
@@ -1327,24 +1822,18 @@
             speak('Showing social media links.');
         }
 
-        // Particle Animation
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                container.appendChild(particle);
+        // Background Wave Animation
+        function createWaveAnimation() {
+            const container = document.getElementById('bgAnimation');
+            if (container) {
+                // Wave animation is handled by CSS, just ensure it's visible
+                container.style.display = 'block';
             }
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
+            createWaveAnimation();
             
             // Load saved theme
             const savedTheme = localStorage.getItem('selectedTheme');
@@ -1358,7 +1847,7 @@
             // Initialize voice recognition system
             if (initializeVoiceRecognition()) {
                 setTimeout(() => {
-                    speak('Welcome to Gospel Lyrics Platform Golden Edition. Your real voice recognition system is ready! Say "hello" to test it.', 'welcome');
+                    speak('Welcome to Gospel Video Platform Personal Voice Edition. Your video library and voice recognition system are ready! Upload your videos or say "hello" to test voice commands.', 'welcome');
                     // Auto-calibrate voice for better recognition
                     setTimeout(() => {
                         if (!voiceCalibrated) {
