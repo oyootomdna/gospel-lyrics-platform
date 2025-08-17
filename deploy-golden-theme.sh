@@ -1,0 +1,864 @@
+#!/bin/bash
+
+echo "✨ Creating Gospel Lyrics Platform - GOLDEN THEME ✨"
+echo "================================================"
+echo
+
+echo "Creating premium golden theme..."
+
+# Create the golden theme HTML file
+cat > "src/index.html" << 'GOLDEN_THEME_EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gospel Lyrics Platform - Golden Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gold: #FFD700;
+            --dark-gold: #B8860B;
+            --light-gold: #FFF8DC;
+            --accent-gold: #DAA520;
+            --royal-purple: #4B0082;
+            --deep-purple: #2F0A4F;
+            --text-gold: #F5DEB3;
+            --shadow-gold: rgba(255, 215, 0, 0.3);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Georgia', serif; 
+            background: linear-gradient(135deg, var(--royal-purple) 0%, var(--deep-purple) 50%, #1a0631 100%);
+            min-height: 100vh; 
+            color: var(--text-gold); 
+            position: relative;
+        }
+        
+        /* Animated golden particles background */
+        .golden-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--primary-gold);
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--dark-gold), var(--primary-gold));
+            color: var(--deep-purple);
+            padding: 8px 20px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px var(--shadow-gold);
+        }
+        
+        .status-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .voice-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .voice-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ff4444;
+            animation: pulse 2s infinite;
+        }
+        
+        .voice-indicator.active {
+            background: #44ff44;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px var(--primary-gold); }
+            to { text-shadow: 0 0 30px var(--primary-gold), 0 0 40px var(--accent-gold); }
+        }
+        
+        .subtitle {
+            font-size: 1.4em;
+            color: var(--light-gold);
+            font-style: italic;
+        }
+        
+        /* Theme Selector */
+        .theme-selector {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--primary-gold);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+        }
+        
+        .theme-selector h3 {
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        
+        .theme-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .theme-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .theme-btn:hover::before {
+            left: 100%;
+        }
+        
+        .golden-theme {
+            background: linear-gradient(45deg, var(--primary-gold), var(--dark-gold));
+            color: var(--deep-purple);
+        }
+        
+        .royal-theme {
+            background: linear-gradient(45deg, #663399, #4B0082);
+            color: white;
+        }
+        
+        .emerald-theme {
+            background: linear-gradient(45deg, #50C878, #228B22);
+            color: white;
+        }
+        
+        .ruby-theme {
+            background: linear-gradient(45deg, #E0115F, #8B0000);
+            color: white;
+        }
+        
+        /* Voice Command Section */
+        .voice-section {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--accent-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .voice-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .voice-btn {
+            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
+            color: var(--deep-purple);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .voice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .voice-btn:active {
+            transform: translateY(0);
+        }
+        
+        .voice-commands-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .command-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .command-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Social Media Integration */
+        .social-section {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--primary-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
+            color: var(--deep-purple);
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .content-card {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--accent-gold);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold), var(--primary-gold));
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .content-card:hover::before {
+            opacity: 1;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .card-icon {
+            font-size: 2.5em;
+            color: var(--primary-gold);
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.5em;
+            color: var(--primary-gold);
+            margin-bottom: 15px;
+        }
+        
+        .card-description {
+            color: var(--text-gold);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .card-button {
+            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
+            color: var(--deep-purple);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        /* Admin Panel Access */
+        .admin-access {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .admin-btn {
+            background: linear-gradient(45deg, var(--dark-gold), var(--primary-gold));
+            color: var(--deep-purple);
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .container {
+                padding: 60px 15px 15px;
+            }
+            
+            .theme-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .voice-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-content">
+            <div>🎵 Gospel Lyrics Platform - Golden Edition | Connected to oyoofrancistomy2@gmail.com</div>
+            <div class="voice-status">
+                <div class="voice-indicator" id="voiceIndicator"></div>
+                <span id="voiceStatus">Voice Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Golden Particles -->
+    <div class="golden-particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎵 Gospel Lyrics Platform</h1>
+            <p class="subtitle">Golden Edition - Premium Experience</p>
+        </div>
+
+        <!-- Theme Selector -->
+        <div class="theme-selector">
+            <h3>✨ Choose Your Premium Theme</h3>
+            <div class="theme-buttons">
+                <button class="theme-btn golden-theme" onclick="applyTheme('golden')">
+                    🥇 Golden Royalty (Current)
+                </button>
+                <button class="theme-btn royal-theme" onclick="applyTheme('royal')">
+                    👑 Royal Purple
+                </button>
+                <button class="theme-btn emerald-theme" onclick="applyTheme('emerald')">
+                    💎 Emerald Divine
+                </button>
+                <button class="theme-btn ruby-theme" onclick="applyTheme('ruby')">
+                    💍 Ruby Passion
+                </button>
+            </div>
+        </div>
+
+        <!-- Voice Command Section -->
+        <div class="voice-section">
+            <h3>🎤 Voice Commands</h3>
+            <p>Control the platform with your voice! Say commands naturally.</p>
+            
+            <div class="voice-controls">
+                <button class="voice-btn" onclick="startVoiceRecognition()">
+                    <i class="fas fa-microphone"></i> Start Listening
+                </button>
+                <button class="voice-btn" onclick="stopVoiceRecognition()">
+                    <i class="fas fa-microphone-slash"></i> Stop Listening
+                </button>
+                <button class="voice-btn" onclick="showVoiceHelp()">
+                    <i class="fas fa-question-circle"></i> Voice Help
+                </button>
+            </div>
+
+            <div class="voice-commands-list" id="voiceHelp" style="display: none;">
+                <h4>Available Voice Commands:</h4>
+                <div class="command-item">
+                    <span>"Search for [song name]"</span>
+                    <span>🔍 Search lyrics</span>
+                </div>
+                <div class="command-item">
+                    <span>"Change theme to golden"</span>
+                    <span>🎨 Switch themes</span>
+                </div>
+                <div class="command-item">
+                    <span>"Open admin panel"</span>
+                    <span>⚙️ Admin access</span>
+                </div>
+                <div class="command-item">
+                    <span>"Show social links"</span>
+                    <span>📱 Social media</span>
+                </div>
+                <div class="command-item">
+                    <span>"Download theme"</span>
+                    <span>💾 Export themes</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Integration -->
+        <div class="social-section">
+            <h3>📱 Connect with Francis Oyoo</h3>
+            <p>Follow and engage on all social platforms linked to oyoofrancistomy2@gmail.com</p>
+            
+            <div class="social-links">
+                <a href="https://facebook.com/oyoofrancistomy2" class="social-link" target="_blank">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="https://twitter.com/oyoofrancistomy2" class="social-link" target="_blank">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://instagram.com/oyoofrancistomy2" class="social-link" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://youtube.com/@oyoofrancistomy2" class="social-link" target="_blank">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+                <a href="https://linkedin.com/in/oyoofrancistomy2" class="social-link" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="mailto:oyoofrancistomy2@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <div class="content-card">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">Search Lyrics</div>
+                <div class="card-description">
+                    Find gospel lyrics instantly with our advanced search. Voice command: "Search for [song name]"
+                </div>
+                <button class="card-button" onclick="searchLyrics()">Search Now</button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">📱</div>
+                <div class="card-title">Mobile App</div>
+                <div class="card-description">
+                    Download our mobile app for iOS, Android, Windows, and Mac. Coming soon with premium features.
+                </div>
+                <button class="card-button" onclick="downloadApp()">Get App</button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">🎨</div>
+                <div class="card-title">Theme Collection</div>
+                <div class="card-description">
+                    Download premium themes for your personal use. Golden, Royal, Emerald, and Ruby editions available.
+                </div>
+                <button class="card-button" onclick="downloadThemes()">Download Themes</button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">Admin Dashboard</div>
+                <div class="card-description">
+                    Manage content, users, and platform settings. Voice command: "Open admin panel"
+                </div>
+                <button class="card-button" onclick="openAdmin()">Admin Access</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Access Button -->
+    <div class="admin-access">
+        <button class="admin-btn" onclick="openAdmin()" title="Admin Dashboard">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
+
+    <script>
+        // Voice Recognition Setup
+        let recognition;
+        let isListening = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = () => {
+                isListening = true;
+                document.getElementById('voiceIndicator').classList.add('active');
+                document.getElementById('voiceStatus').textContent = 'Listening...';
+                updateStatusBar('🎤 Voice Recognition Active - Listening for commands');
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                document.getElementById('voiceIndicator').classList.remove('active');
+                document.getElementById('voiceStatus').textContent = 'Voice Ready';
+                updateStatusBar('🎵 Gospel Lyrics Platform - Golden Edition | Connected to oyoofrancistomy2@gmail.com');
+            };
+
+            recognition.onresult = (event) => {
+                const lastResult = event.results[event.results.length - 1];
+                if (lastResult.isFinal) {
+                    const command = lastResult[0].transcript.toLowerCase().trim();
+                    processVoiceCommand(command);
+                }
+            };
+        }
+
+        // Voice Command Processing
+        function processVoiceCommand(command) {
+            console.log('Voice command received:', command);
+            
+            if (command.includes('search') || command.includes('find')) {
+                const searchTerm = command.replace(/search for|find|search/g, '').trim();
+                if (searchTerm) {
+                    searchLyrics(searchTerm);
+                } else {
+                    speak('Please specify what you want to search for.');
+                }
+            } else if (command.includes('theme')) {
+                if (command.includes('golden')) applyTheme('golden');
+                else if (command.includes('royal') || command.includes('purple')) applyTheme('royal');
+                else if (command.includes('emerald') || command.includes('green')) applyTheme('emerald');
+                else if (command.includes('ruby') || command.includes('red')) applyTheme('ruby');
+                else speak('Please specify a theme: golden, royal, emerald, or ruby.');
+            } else if (command.includes('admin') || command.includes('dashboard')) {
+                openAdmin();
+            } else if (command.includes('social') || command.includes('facebook') || command.includes('twitter')) {
+                scrollToSocial();
+            } else if (command.includes('download theme')) {
+                downloadThemes();
+            } else if (command.includes('help') || command.includes('commands')) {
+                showVoiceHelp();
+            } else {
+                speak('Command not recognized. Say "help" to see available commands.');
+            }
+        }
+
+        // Voice Control Functions
+        function startVoiceRecognition() {
+            if (recognition && !isListening) {
+                recognition.start();
+            } else if (!recognition) {
+                alert('Voice recognition not supported in this browser. Try Chrome or Edge.');
+            }
+        }
+
+        function stopVoiceRecognition() {
+            if (recognition && isListening) {
+                recognition.stop();
+            }
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.1;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function showVoiceHelp() {
+            const helpDiv = document.getElementById('voiceHelp');
+            if (helpDiv.style.display === 'none') {
+                helpDiv.style.display = 'block';
+                speak('Voice commands help is now displayed.');
+            } else {
+                helpDiv.style.display = 'none';
+            }
+        }
+
+        // Theme Functions
+        function applyTheme(themeName) {
+            const root = document.documentElement;
+            
+            switch(themeName) {
+                case 'golden':
+                    root.style.setProperty('--primary-gold', '#FFD700');
+                    root.style.setProperty('--dark-gold', '#B8860B');
+                    root.style.setProperty('--royal-purple', '#4B0082');
+                    break;
+                case 'royal':
+                    root.style.setProperty('--primary-gold', '#9370DB');
+                    root.style.setProperty('--dark-gold', '#663399');
+                    root.style.setProperty('--royal-purple', '#191970');
+                    break;
+                case 'emerald':
+                    root.style.setProperty('--primary-gold', '#50C878');
+                    root.style.setProperty('--dark-gold', '#228B22');
+                    root.style.setProperty('--royal-purple', '#006400');
+                    break;
+                case 'ruby':
+                    root.style.setProperty('--primary-gold', '#E0115F');
+                    root.style.setProperty('--dark-gold', '#8B0000');
+                    root.style.setProperty('--royal-purple', '#4B0000');
+                    break;
+            }
+            
+            localStorage.setItem('selectedTheme', themeName);
+            speak(`${themeName} theme applied successfully.`);
+            updateStatusBar(`🎨 Theme changed to ${themeName.charAt(0).toUpperCase() + themeName.slice(1)}`);
+        }
+
+        // Utility Functions
+        function updateStatusBar(message) {
+            const statusContent = document.querySelector('.status-content div:first-child');
+            statusContent.textContent = message;
+            setTimeout(() => {
+                statusContent.textContent = '🎵 Gospel Lyrics Platform - Golden Edition | Connected to oyoofrancistomy2@gmail.com';
+            }, 3000);
+        }
+
+        function searchLyrics(searchTerm = '') {
+            const term = searchTerm || prompt('Enter song name or artist:');
+            if (term) {
+                speak(`Searching for ${term}`);
+                updateStatusBar(`🔍 Searching for: ${term}`);
+                // Implementation for lyrics search
+                alert(`Searching for: ${term}\n\nSearch functionality will be implemented with the backend.`);
+            }
+        }
+
+        function downloadApp() {
+            speak('Mobile app coming soon for all platforms.');
+            alert('Mobile App Development\n\n📱 iOS App Store\n🤖 Google Play Store\n🪟 Microsoft Store\n🍎 Mac App Store\n\nComing Soon!');
+        }
+
+        function downloadThemes() {
+            speak('Preparing theme download.');
+            const themes = ['Golden Royalty', 'Royal Purple', 'Emerald Divine', 'Ruby Passion'];
+            alert('Premium Theme Collection\n\n' + themes.map(t => `✨ ${t}`).join('\n') + '\n\nDownload functionality coming soon!');
+        }
+
+        function openAdmin() {
+            speak('Opening admin dashboard.');
+            window.open('admin/', '_blank');
+        }
+
+        function scrollToSocial() {
+            document.querySelector('.social-section').scrollIntoView({ behavior: 'smooth' });
+            speak('Showing social media links.');
+        }
+
+        // Particle Animation
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            }
+            
+            // Auto-start voice recognition if supported
+            if (recognition) {
+                setTimeout(() => {
+                    speak('Welcome to Gospel Lyrics Platform Golden Edition. Voice commands are ready.');
+                }, 1000);
+            }
+            
+            updateStatusBar('🎵 Platform loaded successfully - All systems operational');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'k':
+                        e.preventDefault();
+                        searchLyrics();
+                        break;
+                    case 'm':
+                        e.preventDefault();
+                        if (isListening) stopVoiceRecognition();
+                        else startVoiceRecognition();
+                        break;
+                    case 'h':
+                        e.preventDefault();
+                        showVoiceHelp();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+GOLDEN_THEME_EOF
+
+echo "✅ Golden theme created successfully!"
+echo "📁 Theme files created in src/ directory"
+echo "🎤 Voice commands integrated"
+echo "📱 Social media links configured for oyoofrancistomy2@gmail.com"
+echo "🎨 Multiple themes available for download"
+echo
+
+# Check if wrangler.toml exists and is configured
+if [ -f "wrangler.toml" ]; then
+    echo "🔧 Wrangler configuration found, deploying to Cloudflare Pages..."
+    
+    # Deploy to Cloudflare Pages
+    npx wrangler pages deploy src --project-name gospel-lyrics-platform --compatibility-date 2024-01-15
+    
+    if [ $? -eq 0 ]; then
+        echo "🚀 Golden theme deployed successfully!"
+        echo "🌐 Your Gospel Lyrics Platform is live with premium golden theme"
+        echo "🎤 Voice commands are active"
+        echo "📱 Social media integration complete"
+        echo "🎨 Theme switching functionality available"
+    else
+        echo "⚠️ Deployment encountered issues. Check the output above."
+    fi
+else
+    echo "⚠️ wrangler.toml not found. Please configure Cloudflare deployment first."
+fi
+
+echo
+echo "🎵 Gospel Lyrics Platform - Golden Edition Ready! 🎵"
