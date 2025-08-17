@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gospel Lyrics Video Platform - Personal Voice Edition</title>
+    <title>🎬 Gospel Videos Platform - AI-Enhanced Video Library</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -175,11 +175,21 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             border: 1px solid var(--accent-color);
+            position: relative;
         }
         
         .video-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(74, 144, 226, 0.4);
+        }
+        
+        .video-card.premium {
+            border: 2px solid var(--primary-gold, #FFD700);
+            background: linear-gradient(135deg, var(--background-light), rgba(255, 215, 0, 0.1));
+        }
+        
+        .video-card.premium:hover {
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
         }
         
         .video-thumbnail {
@@ -193,6 +203,31 @@
             overflow: hidden;
         }
         
+        .video-duration {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+        }
+        
         .video-thumbnail video {
             width: 100%;
             height: 100%;
@@ -203,6 +238,23 @@
             color: var(--text-secondary);
             font-size: 3em;
             opacity: 0.5;
+        }
+        
+        .upload-placeholder {
+            color: var(--accent-color);
+            text-align: center;
+            opacity: 0.8;
+        }
+        
+        .upload-placeholder i {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+        
+        .upload-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            line-height: 1.2;
         }
         
         .play-overlay {
@@ -228,6 +280,27 @@
         
         .video-info {
             padding: 20px;
+        }
+        
+        .video-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 8px 0;
+            line-height: 1.4;
+        }
+        
+        .video-stats {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .video-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
         .video-title {
@@ -266,6 +339,17 @@
         .action-btn:hover {
             background: var(--primary-color);
             transform: translateY(-2px);
+        }
+        
+        .action-btn.primary {
+            background: linear-gradient(45deg, var(--primary-gold, #FFD700), var(--accent-gold, #FFA500));
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
         
         /* Upload Section */
@@ -695,10 +779,10 @@
     <!-- Status Bar -->
     <div class="status-bar">
         <div class="status-content">
-            <div>🎬 Gospel Video Platform - Personal Voice Edition | Connected to oyoofrancistomy2@gmail.com</div>
+            <div>🎬 Gospel Videos Platform - AI Enhanced | Premium Video Library Active</div>
             <div class="voice-status">
                 <div class="voice-indicator" id="voiceIndicator"></div>
-                <span id="voiceStatus">Voice Ready</span>
+                <span id="voiceStatus">AI Video System Ready</span>
             </div>
         </div>
     </div>
@@ -711,16 +795,19 @@
     </div>
 
     <div class="container">
-        <!-- Header -->
+        <!-- Header with Logo -->
         <div class="header">
-            <h1>🎬 Gospel Lyrics Video Platform</h1>
-            <p class="subtitle">Personal Voice Edition - Your Gospel Video Collection</p>
+            <div class="logo-container" style="margin-bottom: 20px;">
+                <img src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/aa48dfc2-3878-4c69-864c-4dec79163d41" alt="Gospel Videos Platform Logo" style="width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 8px 25px rgba(255,215,0,0.4); border: 3px solid var(--accent-color);">
+            </div>
+            <h1>🎬 Gospel Videos Platform</h1>
+            <p class="subtitle">AI-Enhanced Video Library - Premium Gospel Video Collection</p>
         </div>
 
-        <!-- Video Upload Section -->
+        <!-- Featured Video Section -->
         <div class="video-section">
-            <h3>🎬 Upload Your Gospel Lyrics Videos</h3>
-            <p>Upload your gospel lyrics videos and I'll automatically extract audio for playback</p>
+            <h3>🎥 Featured Gospel Videos - Premium Collection</h3>
+            <p>Professional gospel lyrics videos with synchronized text, spiritual visuals, and high-quality audio</p>
             
             <div class="upload-section" ondrop="dropVideoHandler(event)" ondragover="dragOverHandler(event)">
                 <div class="upload-icon">
@@ -738,77 +825,131 @@
             </div>
         </div>
         
-        <!-- Video Library -->
+        <!-- Premium Video Library -->
         <div class="video-section">
-            <h3>📺 Your Gospel Video Library</h3>
+            <h3>🎬 Premium Gospel Video Library</h3>
             <div class="video-grid" id="videoLibrary">
-                <!-- Sample videos will be loaded here -->
-                <div class="video-card">
+                <!-- AI Generated Gospel Videos -->
+                <div class="video-card premium">
                     <div class="video-thumbnail">
-                        <div class="video-placeholder">
-                            <i class="fas fa-music"></i>
-                        </div>
-                        <button class="play-overlay" onclick="playVideo('sample1')">
+                        <video poster="https://cdn1.genspark.ai/user-upload-image/video_frames/21f3804c-edc8-4200-96b9-b47b92e16228" muted onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="https://cdn1.genspark.ai/user-upload-image/5/f6ea74ac-9258-415c-a02e-063aaf634d7b.mp4" type="video/mp4">
+                        </video>
+                        <button class="play-overlay" onclick="playFullVideo('amazing_grace')">
                             <i class="fas fa-play"></i>
                         </button>
+                        <div class="video-duration">8:00</div>
+                        <div class="premium-badge">AI Premium</div>
                     </div>
                     <div class="video-info">
                         <div class="video-title">Amazing Grace</div>
-                        <div class="video-artist">Traditional Gospel</div>
+                        <div class="video-artist">Traditional Gospel • AI Enhanced</div>
+                        <div class="video-description">Beautiful gospel choir with golden lighting and church atmosphere</div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 1.2K views</span>
+                            <span><i class="fas fa-heart"></i> 95 likes</span>
+                            <span><i class="fas fa-share"></i> 23 shares</span>
+                        </div>
                         <div class="video-actions">
-                            <button class="action-btn" onclick="playVideo('sample1')">
-                                <i class="fas fa-play"></i> Play
+                            <button class="action-btn primary" onclick="playFullVideo('amazing_grace')">
+                                <i class="fas fa-play"></i> Watch Now
                             </button>
-                            <button class="action-btn" onclick="extractAudio('sample1')">
-                                <i class="fas fa-volume-up"></i> Audio
+                            <button class="action-btn" onclick="downloadVideo('amazing_grace')">
+                                <i class="fas fa-download"></i> Download
                             </button>
-                            <button class="action-btn" onclick="editVideo('sample1')">
-                                <i class="fas fa-edit"></i> Edit
+                            <button class="action-btn" onclick="shareVideo('amazing_grace')">
+                                <i class="fas fa-share"></i> Share
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="video-card">
+                <div class="video-card premium">
                     <div class="video-thumbnail">
-                        <div class="video-placeholder">
-                            <i class="fas fa-music"></i>
-                        </div>
-                        <button class="play-overlay" onclick="playVideo('sample2')">
+                        <video poster="https://cdn1.genspark.ai/user-upload-image/video_frames/482452cd-500e-4327-a525-dc0720cfa97c" muted onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="https://cdn1.genspark.ai/user-upload-image/5/706ca43c-4489-4aba-b3e2-c568d5e17941.mp4" type="video/mp4">
+                        </video>
+                        <button class="play-overlay" onclick="playFullVideo('how_great_thou_art')">
                             <i class="fas fa-play"></i>
                         </button>
+                        <div class="video-duration">8:00</div>
+                        <div class="premium-badge">AI Premium</div>
                     </div>
                     <div class="video-info">
                         <div class="video-title">How Great Thou Art</div>
-                        <div class="video-artist">Traditional Hymn</div>
+                        <div class="video-artist">Traditional Hymn • AI Enhanced</div>
+                        <div class="video-description">Majestic landscape with sunrise and golden text overlay</div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 2.1K views</span>
+                            <span><i class="fas fa-heart"></i> 156 likes</span>
+                            <span><i class="fas fa-share"></i> 34 shares</span>
+                        </div>
                         <div class="video-actions">
-                            <button class="action-btn" onclick="playVideo('sample2')">
-                                <i class="fas fa-play"></i> Play
+                            <button class="action-btn primary" onclick="playFullVideo('how_great_thou_art')">
+                                <i class="fas fa-play"></i> Watch Now
                             </button>
-                            <button class="action-btn" onclick="extractAudio('sample2')">
-                                <i class="fas fa-volume-up"></i> Audio
+                            <button class="action-btn" onclick="downloadVideo('how_great_thou_art')">
+                                <i class="fas fa-download"></i> Download
                             </button>
-                            <button class="action-btn" onclick="editVideo('sample2')">
-                                <i class="fas fa-edit"></i> Edit
+                            <button class="action-btn" onclick="shareVideo('how_great_thou_art')">
+                                <i class="fas fa-share"></i> Share
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="video-card">
+                <div class="video-card premium">
                     <div class="video-thumbnail">
-                        <div class="video-placeholder">
-                            <i class="fas fa-plus"></i>
+                        <video poster="https://cdn1.genspark.ai/user-upload-image/video_frames/2ece3a5e-1ee1-49d0-aaa6-00e267cec042" muted onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="https://cdn1.genspark.ai/user-upload-image/5/64d43c8a-96ff-4013-9148-75b9dd6ce6f5.mp4" type="video/mp4">
+                        </video>
+                        <button class="play-overlay" onclick="playFullVideo('blessed_assurance')">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <div class="video-duration">8:00</div>
+                        <div class="premium-badge">AI Premium</div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">Blessed Assurance</div>
+                        <div class="video-artist">Classic Gospel • AI Enhanced</div>
+                        <div class="video-description">Peaceful setting with flowing water and gentle melodies</div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 1.8K views</span>
+                            <span><i class="fas fa-heart"></i> 127 likes</span>
+                            <span><i class="fas fa-share"></i> 19 shares</span>
                         </div>
-                        <button class="play-overlay" onclick="document.getElementById('videoFileInput').click()">
+                        <div class="video-actions">
+                            <button class="action-btn primary" onclick="playFullVideo('blessed_assurance')">
+                                <i class="fas fa-play"></i> Watch Now
+                            </button>
+                            <button class="action-btn" onclick="downloadVideo('blessed_assurance')">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <button class="action-btn" onclick="shareVideo('blessed_assurance')">
+                                <i class="fas fa-share"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card upload-card">
+                    <div class="video-thumbnail">
+                        <div class="upload-placeholder">
+                            <i class="fas fa-video"></i>
+                            <div class="upload-text">Create New<br>Gospel Video</div>
+                        </div>
+                        <button class="play-overlay" onclick="createNewVideo()">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
                     <div class="video-info">
-                        <div class="video-title">Upload New Video</div>
-                        <div class="video-artist">Add your gospel videos</div>
+                        <div class="video-title">AI Video Creator</div>
+                        <div class="video-artist">Generate custom gospel videos</div>
                         <div class="video-actions">
-                            <button class="action-btn" onclick="document.getElementById('videoFileInput').click()">
+                            <button class="action-btn primary" onclick="createNewVideo()">
+                                <i class="fas fa-magic"></i> Create Video
+                            </button>
+                            <button class="action-btn" onclick="uploadVideo()">
                                 <i class="fas fa-upload"></i> Upload
                             </button>
                         </div>
@@ -1847,7 +1988,7 @@
             // Initialize voice recognition system
             if (initializeVoiceRecognition()) {
                 setTimeout(() => {
-                    speak('Welcome to Gospel Video Platform Personal Voice Edition. Your video library and voice recognition system are ready! Upload your videos or say "hello" to test voice commands.', 'welcome');
+                    speak('Welcome to Gospel Videos Platform AI Enhanced Edition. Your premium video library is ready with high-quality gospel content! Say "hello" to test voice commands or click any video to start watching.', 'welcome');
                     // Auto-calibrate voice for better recognition
                     setTimeout(() => {
                         if (!voiceCalibrated) {
@@ -1857,7 +1998,7 @@
                 }, 1000);
             }
             
-            updateStatusBar('🎵 Platform loaded successfully - Custom voice system ready');
+            updateStatusBar('🎬 Premium Video Platform loaded - AI Enhanced Library Ready');
         });
 
         // Keyboard shortcuts
