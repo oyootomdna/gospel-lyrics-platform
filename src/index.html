@@ -247,6 +247,89 @@
             transform: translateY(0);
         }
         
+        /* Custom Voice Upload Styles */
+        .voice-tab-btn {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--accent-gold);
+            color: var(--text-gold);
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .voice-tab-btn.active {
+            background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
+            color: var(--deep-purple);
+        }
+        
+        .voice-tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .record-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--accent-gold);
+        }
+        
+        .record-item h5 {
+            color: var(--primary-gold);
+            margin-bottom: 8px;
+        }
+        
+        .record-controls {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .record-btn, .play-btn {
+            background: linear-gradient(45deg, var(--accent-gold), var(--primary-gold));
+            border: none;
+            color: var(--deep-purple);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .record-btn:hover, .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4);
+        }
+        
+        .recording-status {
+            font-size: 11px;
+            color: var(--text-gold);
+            font-style: italic;
+        }
+        
+        .file-upload-area {
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload-area:hover {
+            background: rgba(255, 215, 0, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        .voice-library-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-gold);
+        }
+        
         .voice-commands-list {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
@@ -478,8 +561,8 @@
 
         <!-- Voice Command Section -->
         <div class="voice-section">
-            <h3>🎤 Voice Commands</h3>
-            <p>Control the platform with your voice! Say commands naturally.</p>
+            <h3>🎤 Voice Commands & Custom Voice Setup</h3>
+            <p>Control the platform with your voice AND use your real voice for feedback!</p>
             
             <div class="voice-controls">
                 <button class="voice-btn" onclick="startVoiceRecognition()">
@@ -496,11 +579,211 @@
                 </button>
             </div>
             
+            <!-- Custom Voice Upload Section -->
+            <div class="custom-voice-section" style="margin-top: 20px; padding: 20px; background: rgba(255,215,0,0.15); border: 2px solid var(--accent-gold); border-radius: 15px;">
+                <h4 style="color: var(--primary-gold); margin-bottom: 15px;">🎵 Upload Your Real Voice for Feedback</h4>
+                
+                <div class="voice-upload-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button class="voice-tab-btn active" onclick="showVoiceTab('record')" id="recordTab">
+                        <i class="fas fa-record-vinyl"></i> Record Live
+                    </button>
+                    <button class="voice-tab-btn" onclick="showVoiceTab('upload')" id="uploadTab">
+                        <i class="fas fa-upload"></i> Upload Files
+                    </button>
+                    <button class="voice-tab-btn" onclick="showVoiceTab('manage')" id="manageTab">
+                        <i class="fas fa-list"></i> Manage Samples
+                    </button>
+                    <button class="voice-tab-btn" onclick="showVoiceTab('test')" id="testTab">
+                        <i class="fas fa-play"></i> Test Voice
+                    </button>
+                </div>
+                
+                <!-- Record Voice Tab -->
+                <div class="voice-tab-content" id="recordContent">
+                    <p style="margin-bottom: 15px;">Record voice samples for different platform responses:</p>
+                    
+                    <div class="recording-interface" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div class="record-item">
+                            <h5>Welcome Message</h5>
+                            <p style="font-style: italic; color: var(--text-gold); margin: 5px 0;">"Welcome to Gospel Lyrics Platform"</p>
+                            <div class="record-controls">
+                                <button onclick="startRecording('welcome')" class="record-btn">
+                                    <i class="fas fa-circle" style="color: red;"></i> Record
+                                </button>
+                                <button onclick="playRecording('welcome')" class="play-btn">
+                                    <i class="fas fa-play"></i> Play
+                                </button>
+                            </div>
+                            <div class="recording-status" id="welcomeStatus">Ready to record</div>
+                        </div>
+                        
+                        <div class="record-item">
+                            <h5>Command Confirmation</h5>
+                            <p style="font-style: italic; color: var(--text-gold); margin: 5px 0;">"Command received"</p>
+                            <div class="record-controls">
+                                <button onclick="startRecording('confirm')" class="record-btn">
+                                    <i class="fas fa-circle" style="color: red;"></i> Record
+                                </button>
+                                <button onclick="playRecording('confirm')" class="play-btn">
+                                    <i class="fas fa-play"></i> Play
+                                </button>
+                            </div>
+                            <div class="recording-status" id="confirmStatus">Ready to record</div>
+                        </div>
+                        
+                        <div class="record-item">
+                            <h5>Search Response</h5>
+                            <p style="font-style: italic; color: var(--text-gold); margin: 5px 0;">"Searching for your request"</p>
+                            <div class="record-controls">
+                                <button onclick="startRecording('search')" class="record-btn">
+                                    <i class="fas fa-circle" style="color: red;"></i> Record
+                                </button>
+                                <button onclick="playRecording('search')" class="play-btn">
+                                    <i class="fas fa-play"></i> Play
+                                </button>
+                            </div>
+                            <div class="recording-status" id="searchStatus">Ready to record</div>
+                        </div>
+                        
+                        <div class="record-item">
+                            <h5>Theme Change</h5>
+                            <p style="font-style: italic; color: var(--text-gold); margin: 5px 0;">"Theme changed successfully"</p>
+                            <div class="record-controls">
+                                <button onclick="startRecording('theme')" class="record-btn">
+                                    <i class="fas fa-circle" style="color: red;"></i> Record
+                                </button>
+                                <button onclick="playRecording('theme')" class="play-btn">
+                                    <i class="fas fa-play"></i> Play
+                                </button>
+                            </div>
+                            <div class="recording-status" id="themeStatus">Ready to record</div>
+                        </div>
+                        
+                        <div class="record-item">
+                            <h5>Error Message</h5>
+                            <p style="font-style: italic; color: var(--text-gold); margin: 5px 0;">"I didn't understand that command"</p>
+                            <div class="record-controls">
+                                <button onclick="startRecording('error')" class="record-btn">
+                                    <i class="fas fa-circle" style="color: red;"></i> Record
+                                </button>
+                                <button onclick="playRecording('error')" class="play-btn">
+                                    <i class="fas fa-play"></i> Play
+                                </button>
+                            </div>
+                            <div class="recording-status" id="errorStatus">Ready to record</div>
+                        </div>
+                        
+                        <div class="record-item">
+                            <h5>Greeting Response</h5>
+                            <p style="font-style: italic; color: var(--text-gold); margin: 5px 0;">"Hello! How can I help you?"</p>
+                            <div class="record-controls">
+                                <button onclick="startRecording('greeting')" class="record-btn">
+                                    <i class="fas fa-circle" style="color: red;"></i> Record
+                                </button>
+                                <button onclick="playRecording('greeting')" class="play-btn">
+                                    <i class="fas fa-play"></i> Play
+                                </button>
+                            </div>
+                            <div class="recording-status" id="greetingStatus">Ready to record</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upload Voice Tab -->
+                <div class="voice-tab-content" id="uploadContent" style="display: none;">
+                    <p style="margin-bottom: 15px;">Upload your pre-recorded voice files (MP3, WAV, M4A, OGG):</p>
+                    
+                    <div class="upload-interface">
+                        <div class="file-upload-area" style="border: 2px dashed var(--primary-gold); border-radius: 10px; padding: 30px; text-align: center; margin-bottom: 20px;" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 3em; color: var(--primary-gold); margin-bottom: 15px;"></i>
+                            <p><strong>Drag & Drop voice files here</strong></p>
+                            <p>or</p>
+                            <input type="file" id="voiceFileInput" multiple accept="audio/*" style="display: none;" onchange="handleFileSelect(event)">
+                            <button class="voice-btn" onclick="document.getElementById('voiceFileInput').click()">
+                                <i class="fas fa-folder-open"></i> Browse Files
+                            </button>
+                        </div>
+                        
+                        <div class="voice-assignment" style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                            <h5 style="color: var(--primary-gold); margin-bottom: 15px;">Assign Voice Files to Responses:</h5>
+                            <div class="assignment-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;" id="assignmentGrid">
+                                <!-- Dynamic content will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Manage Samples Tab -->
+                <div class="voice-tab-content" id="manageContent" style="display: none;">
+                    <div class="voice-library" style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                        <h5 style="color: var(--primary-gold); margin-bottom: 15px;">Your Voice Library:</h5>
+                        <div id="voiceLibrary">
+                            <!-- Voice samples will be listed here -->
+                        </div>
+                        
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button class="voice-btn" onclick="exportVoiceProfile()">
+                                <i class="fas fa-download"></i> Export Voice Profile
+                            </button>
+                            <button class="voice-btn" onclick="importVoiceProfile()">
+                                <i class="fas fa-upload"></i> Import Voice Profile
+                            </button>
+                            <button class="voice-btn" onclick="clearAllVoices()" style="background: linear-gradient(45deg, #ff4444, #cc0000);">
+                                <i class="fas fa-trash"></i> Clear All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Test Voice Tab -->
+                <div class="voice-tab-content" id="testContent" style="display: none;">
+                    <div class="voice-test-panel" style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                        <h5 style="color: var(--primary-gold); margin-bottom: 15px;">Test Your Custom Voice Responses:</h5>
+                        
+                        <div class="test-buttons" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                            <button class="voice-btn" onclick="testVoiceResponse('welcome')">
+                                <i class="fas fa-play"></i> Test Welcome
+                            </button>
+                            <button class="voice-btn" onclick="testVoiceResponse('confirm')">
+                                <i class="fas fa-play"></i> Test Confirm
+                            </button>
+                            <button class="voice-btn" onclick="testVoiceResponse('search')">
+                                <i class="fas fa-play"></i> Test Search
+                            </button>
+                            <button class="voice-btn" onclick="testVoiceResponse('theme')">
+                                <i class="fas fa-play"></i> Test Theme
+                            </button>
+                            <button class="voice-btn" onclick="testVoiceResponse('error')">
+                                <i class="fas fa-play"></i> Test Error
+                            </button>
+                            <button class="voice-btn" onclick="testVoiceResponse('greeting')">
+                                <i class="fas fa-play"></i> Test Greeting
+                            </button>
+                        </div>
+                        
+                        <div class="voice-settings" style="background: rgba(255,215,0,0.1); padding: 15px; border-radius: 10px;">
+                            <h6 style="color: var(--primary-gold); margin-bottom: 10px;">Voice Playback Settings:</h6>
+                            <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                                <label style="display: flex; align-items: center; gap: 5px;">
+                                    Volume: <input type="range" id="voiceVolume" min="0" max="1" step="0.1" value="1" style="margin-left: 5px;">
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 5px;">
+                                    <input type="checkbox" id="useCustomVoice" checked onchange="toggleCustomVoice()"> Use My Voice
+                                </label>
+                                <button class="voice-btn" onclick="testAllVoices()" style="padding: 8px 15px; font-size: 14px;">
+                                    <i class="fas fa-volume-up"></i> Test All
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 10px;">
-                <h4 style="color: var(--primary-gold); margin-bottom: 10px;">🎤 Real Voice Recognition Active</h4>
-                <p><strong>Try saying:</strong> "Hello Gospel Platform" or "Search for Amazing Grace"</p>
-                <p><strong>Natural Speech:</strong> Speak normally - no need for exact commands!</p>
-                <p><strong>Calibration:</strong> Click "Calibrate My Voice" for personalized recognition</p>
+                <h4 style="color: var(--primary-gold); margin-bottom: 10px;">🎤 Voice Recognition + Your Voice Feedback</h4>
+                <p><strong>Listen:</strong> Platform uses YOUR recorded voice for all responses!</p>
+                <p><strong>Natural Speech:</strong> Speak normally - get feedback in YOUR voice!</p>
+                <p><strong>Record Once:</strong> Upload samples and use them everywhere on the platform</p>
             </div>
 
             <div class="voice-commands-list" id="voiceHelp" style="display: none;">
@@ -655,11 +938,23 @@
         let recognition;
         let isListening = false;
         let voiceCalibrated = false;
+        let mediaRecorder;
+        let recordingChunks = [];
+        let currentRecordingType = null;
+        let customVoiceSamples = {
+            welcome: null,
+            confirm: null,
+            search: null,
+            theme: null,
+            error: null,
+            greeting: null
+        };
         let userVoiceProfile = {
             pitch: 1.0,
             rate: 1.0,
             volume: 1.0,
-            preferredLanguage: 'en-US'
+            preferredLanguage: 'en-US',
+            useCustomVoice: true
         };
 
         // Initialize Enhanced Voice Recognition
@@ -901,14 +1196,54 @@
             }
         }
 
-        function speak(text) {
+        function speak(text, responseType = 'generic') {
+            // Check if custom voice should be used and is available
+            if (userVoiceProfile.useCustomVoice && customVoiceSamples[responseType]) {
+                playCustomVoice(responseType);
+                return;
+            }
+            
+            // Fallback to text-to-speech
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.8;
-                utterance.pitch = 1.1;
+                utterance.rate = userVoiceProfile.rate;
+                utterance.pitch = userVoiceProfile.pitch;
+                utterance.volume = userVoiceProfile.volume;
                 speechSynthesis.speak(utterance);
             }
         }
+        
+        // Custom Voice Functions
+        function playCustomVoice(responseType) {
+            if (customVoiceSamples[responseType]) {
+                const audio = new Audio(customVoiceSamples[responseType]);
+                audio.volume = document.getElementById('voiceVolume')?.value || 1;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            }
+        }
+        
+        // Voice Recording Functions
+        async function startRecording(type) {
+            currentRecordingType = type;
+            recordingChunks = [];
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        recordingChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordingChunks, { type: 'audio/wav' });
+                    const audioUrl = URL.createObjectURL(blob);
+                    customVoiceSamples[type] = audioUrl;
+                    
+                    // Update UI
+                    document.getElementById(type + 'Status').textContent = 'Recorded! ✅';\n                    document.getElementById(type + 'Status').style.color = 'var(--primary-gold)';\n                    \n                    // Save to localStorage\n                    saveVoiceProfile();\n                    \n                    speak(`${type} voice sample recorded successfully!`, 'confirm');\n                };\n                \n                mediaRecorder.start();\n                \n                // Update UI\n                document.getElementById(type + 'Status').textContent = 'Recording... 🔴';\n                document.getElementById(type + 'Status').style.color = 'red';\n                \n                // Auto-stop after 10 seconds\n                setTimeout(() => {\n                    if (mediaRecorder && mediaRecorder.state === 'recording') {\n                        stopRecording();\n                    }\n                }, 10000);\n                \n            } catch (error) {\n                console.error('Recording failed:', error);\n                speak('Recording failed. Please check microphone permissions.');\n                document.getElementById(type + 'Status').textContent = 'Recording failed ❌';\n            }\n        }\n        \n        function stopRecording() {\n            if (mediaRecorder && mediaRecorder.state === 'recording') {\n                mediaRecorder.stop();\n                mediaRecorder.stream.getTracks().forEach(track => track.stop());\n            }\n        }\n        \n        function playRecording(type) {\n            if (customVoiceSamples[type]) {\n                playCustomVoice(type);\n            } else {\n                speak(`No ${type} voice sample recorded yet. Please record one first.`);\n            }\n        }\n        \n        // Voice Tab Management\n        function showVoiceTab(tabName) {\n            // Hide all tabs\n            document.querySelectorAll('.voice-tab-content').forEach(tab => {\n                tab.style.display = 'none';\n            });\n            \n            // Remove active class from all buttons\n            document.querySelectorAll('.voice-tab-btn').forEach(btn => {\n                btn.classList.remove('active');\n            });\n            \n            // Show selected tab\n            document.getElementById(tabName + 'Content').style.display = 'block';\n            document.getElementById(tabName + 'Tab').classList.add('active');\n            \n            // Update content based on tab\n            if (tabName === 'manage') {\n                updateVoiceLibrary();\n            }\n        }\n        \n        // File Upload Handlers\n        function dragOverHandler(event) {\n            event.preventDefault();\n            event.currentTarget.style.background = 'rgba(255, 215, 0, 0.1)';\n        }\n        \n        function dropHandler(event) {\n            event.preventDefault();\n            event.currentTarget.style.background = '';\n            \n            const files = event.dataTransfer.files;\n            handleFiles(files);\n        }\n        \n        function handleFileSelect(event) {\n            const files = event.target.files;\n            handleFiles(files);\n        }\n        \n        function handleFiles(files) {\n            Array.from(files).forEach(file => {\n                if (file.type.startsWith('audio/')) {\n                    const reader = new FileReader();\n                    reader.onload = (e) => {\n                        // Create audio URL\n                        const audioUrl = e.target.result;\n                        \n                        // Add to assignment grid\n                        addToAssignmentGrid(file.name, audioUrl);\n                    };\n                    reader.readAsDataURL(file);\n                } else {\n                    speak('Please upload audio files only.');\n                }\n            });\n        }\n        \n        function addToAssignmentGrid(fileName, audioUrl) {\n            const grid = document.getElementById('assignmentGrid');\n            const item = document.createElement('div');\n            item.className = 'voice-library-item';\n            item.innerHTML = `\n                <div>\n                    <strong>${fileName}</strong>\n                    <div style=\"font-size: 12px; color: var(--text-gold);\">\n                        Assign to: \n                        <select onchange=\"assignVoiceFile('${audioUrl}', this.value)\" style=\"margin-left: 5px; background: var(--deep-purple); color: var(--text-gold); border: 1px solid var(--accent-gold); border-radius: 3px;\">\n                            <option value=\"\">Select response...</option>\n                            <option value=\"welcome\">Welcome Message</option>\n                            <option value=\"confirm\">Command Confirmation</option>\n                            <option value=\"search\">Search Response</option>\n                            <option value=\"theme\">Theme Change</option>\n                            <option value=\"error\">Error Message</option>\n                            <option value=\"greeting\">Greeting Response</option>\n                        </select>\n                    </div>\n                </div>\n                <div>\n                    <button onclick=\"playAudioUrl('${audioUrl}')\" class=\"play-btn\">\n                        <i class=\"fas fa-play\"></i>\n                    </button>\n                </div>\n            `;\n            grid.appendChild(item);\n        }\n        \n        function assignVoiceFile(audioUrl, responseType) {\n            if (responseType) {\n                customVoiceSamples[responseType] = audioUrl;\n                saveVoiceProfile();\n                speak(`Voice assigned to ${responseType} responses!`, 'confirm');\n            }\n        }\n        \n        function playAudioUrl(audioUrl) {\n            const audio = new Audio(audioUrl);\n            audio.volume = document.getElementById('voiceVolume')?.value || 1;\n            audio.play();\n        }\n        \n        // Voice Profile Management\n        function saveVoiceProfile() {\n            const profile = {\n                samples: customVoiceSamples,\n                settings: userVoiceProfile\n            };\n            localStorage.setItem('gospelVoiceProfile', JSON.stringify(profile));\n        }\n        \n        function loadVoiceProfile() {\n            const saved = localStorage.getItem('gospelVoiceProfile');\n            if (saved) {\n                const profile = JSON.parse(saved);\n                customVoiceSamples = { ...customVoiceSamples, ...profile.samples };\n                userVoiceProfile = { ...userVoiceProfile, ...profile.settings };\n                \n                // Update UI\n                if (document.getElementById('useCustomVoice')) {\n                    document.getElementById('useCustomVoice').checked = userVoiceProfile.useCustomVoice;\n                }\n            }\n        }\n        \n        function updateVoiceLibrary() {\n            const library = document.getElementById('voiceLibrary');\n            library.innerHTML = '';\n            \n            Object.entries(customVoiceSamples).forEach(([type, audioUrl]) => {\n                if (audioUrl) {\n                    const item = document.createElement('div');\n                    item.className = 'voice-library-item';\n                    item.innerHTML = `\n                        <div>\n                            <strong>${type.charAt(0).toUpperCase() + type.slice(1)} Voice</strong>\n                            <div style=\"font-size: 12px; color: var(--text-gold);\">Ready for use ✅</div>\n                        </div>\n                        <div>\n                            <button onclick=\"playCustomVoice('${type}')\" class=\"play-btn\">\n                                <i class=\"fas fa-play\"></i>\n                            </button>\n                            <button onclick=\"removeVoiceSample('${type}')\" class=\"record-btn\" style=\"background: linear-gradient(45deg, #ff4444, #cc0000); margin-left: 5px;\">\n                                <i class=\"fas fa-trash\"></i>\n                            </button>\n                        </div>\n                    `;\n                    library.appendChild(item);\n                }\n            });\n            \n            if (library.children.length === 0) {\n                library.innerHTML = '<p style=\"text-align: center; color: var(--text-gold);\">No voice samples recorded yet. Use the Record or Upload tabs to add your voice!</p>';\n            }\n        }\n        \n        function removeVoiceSample(type) {\n            if (confirm(`Remove ${type} voice sample?`)) {\n                customVoiceSamples[type] = null;\n                saveVoiceProfile();\n                updateVoiceLibrary();\n                speak('Voice sample removed.');\n            }\n        }\n        \n        function testVoiceResponse(type) {\n            const messages = {\n                welcome: 'Welcome to Gospel Lyrics Platform Golden Edition!',\n                confirm: 'Command received and understood.',\n                search: 'Searching for your requested gospel lyrics.',\n                theme: 'Theme has been changed successfully.',\n                error: 'I did not understand that command. Please try again.',\n                greeting: 'Hello! How can I help you with gospel lyrics today?'\n            };\n            \n            speak(messages[type], type);\n        }\n        \n        function testAllVoices() {\n            const types = Object.keys(customVoiceSamples);\n            let index = 0;\n            \n            function playNext() {\n                if (index < types.length) {\n                    const type = types[index];\n                    if (customVoiceSamples[type]) {\n                        speak(`Testing ${type}`, 'confirm');\n                        setTimeout(() => {\n                            testVoiceResponse(type);\n                            index++;\n                            setTimeout(playNext, 2000);\n                        }, 1000);\n                    } else {\n                        index++;\n                        playNext();\n                    }\n                }\n            }\n            \n            playNext();\n        }\n        \n        function toggleCustomVoice() {\n            userVoiceProfile.useCustomVoice = document.getElementById('useCustomVoice').checked;\n            saveVoiceProfile();\n            \n            const status = userVoiceProfile.useCustomVoice ? 'enabled' : 'disabled';\n            speak(`Custom voice feedback ${status}.`, 'confirm');\n        }\n        \n        function exportVoiceProfile() {\n            const profile = {\n                samples: customVoiceSamples,\n                settings: userVoiceProfile,\n                exportDate: new Date().toISOString()\n            };\n            \n            const blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' });\n            const url = URL.createObjectURL(blob);\n            \n            const a = document.createElement('a');\n            a.href = url;\n            a.download = 'gospel-platform-voice-profile.json';\n            a.click();\n            \n            URL.revokeObjectURL(url);\n            speak('Voice profile exported successfully!', 'confirm');\n        }\n        \n        function importVoiceProfile() {\n            const input = document.createElement('input');\n            input.type = 'file';\n            input.accept = '.json';\n            \n            input.onchange = (e) => {\n                const file = e.target.files[0];\n                if (file) {\n                    const reader = new FileReader();\n                    reader.onload = (event) => {\n                        try {\n                            const profile = JSON.parse(event.target.result);\n                            customVoiceSamples = { ...customVoiceSamples, ...profile.samples };\n                            userVoiceProfile = { ...userVoiceProfile, ...profile.settings };\n                            saveVoiceProfile();\n                            updateVoiceLibrary();\n                            speak('Voice profile imported successfully!', 'confirm');\n                        } catch (error) {\n                            speak('Failed to import voice profile. Invalid file format.');\n                        }\n                    };\n                    reader.readAsText(file);\n                }\n            };\n            \n            input.click();\n        }\n        \n        function clearAllVoices() {\n            if (confirm('This will delete all your recorded voice samples. Are you sure?')) {\n                Object.keys(customVoiceSamples).forEach(key => {\n                    customVoiceSamples[key] = null;\n                });\n                saveVoiceProfile();\n                updateVoiceLibrary();\n                speak('All voice samples cleared.');\n            }\n        }
 
         function showVoiceHelp() {
             const helpDiv = document.getElementById('voiceHelp');
@@ -1017,20 +1352,23 @@
                 applyTheme(savedTheme);
             }
             
+            // Load custom voice profile
+            loadVoiceProfile();
+            
             // Initialize voice recognition system
             if (initializeVoiceRecognition()) {
                 setTimeout(() => {
-                    speak('Welcome to Gospel Lyrics Platform Golden Edition. Your real voice recognition system is ready! Say "hello" to test it.');
+                    speak('Welcome to Gospel Lyrics Platform Golden Edition. Your real voice recognition system is ready! Say "hello" to test it.', 'welcome');
                     // Auto-calibrate voice for better recognition
                     setTimeout(() => {
                         if (!voiceCalibrated) {
-                            speak('For the best voice experience, you can say "calibrate voice" anytime.');
+                            speak('For the best voice experience, you can upload your own voice samples in the voice command section.', 'confirm');
                         }
-                    }, 3000);
+                    }, 4000);
                 }, 1000);
             }
             
-            updateStatusBar('🎵 Platform loaded successfully - All systems operational');
+            updateStatusBar('🎵 Platform loaded successfully - Custom voice system ready');
         });
 
         // Keyboard shortcuts
